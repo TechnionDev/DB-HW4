@@ -1,0 +1,353 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass extarticle
+\begin_preamble
+\usepackage{xcolor}
+\pagecolor[rgb]{0.15,0.15,0.15} %black
+\color[rgb]{1,1,1} %grey
+
+\newfontfamily\mylistingsfont{PT Mono}
+\definecolor{lbcolor}{rgb}{0.2,0.2,0.2}  
+\end_preamble
+\use_default_options true
+\begin_modules
+linguistics
+theorems-std
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1cm
+\topmargin 1cm
+\rightmargin 1cm
+\bottommargin 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+DB HW 4
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ID
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Daniel Bondar
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+206560856
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gur Telem
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+206631848
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+MongoDB
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	_id:ObjectId(
+\begin_inset Quotes eld
+\end_inset
+
+1111
+\begin_inset Quotes erd
+\end_inset
+
+),
+\end_layout
+
+\begin_layout Plain Layout
+
+	Book_Name: 
+\begin_inset Quotes eld
+\end_inset
+
+DataBaseSystems
+\begin_inset Quotes erd
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Plain Layout
+
+	Year: 1998,
+\end_layout
+
+\begin_layout Plain Layout
+
+	Max_time: 7,
+\end_layout
+
+\begin_layout Plain Layout
+
+	Pages: 348,
+\end_layout
+
+\begin_layout Plain Layout
+
+	Faculty: 
+\begin_inset Quotes eld
+\end_inset
+
+CS
+\begin_inset Quotes erd
+\end_inset
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+var func = function(book){ 	
+\end_layout
+
+\begin_layout Plain Layout
+
+	if (book.Faculty == "CS" && book.Max_time > 7){
+\end_layout
+
+\begin_layout Plain Layout
+
+		db.books.update({ _id: book._id },{ "$set": { "Max_time": 7 } });
+\end_layout
+
+\begin_layout Plain Layout
+
+	} 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+db.books.find().forEach(func)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+db.posts.aggregate( {$group : {_id:"$Faculty", count:{$sum:1}}} )
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+db.posts.mapReduce(
+\end_layout
+
+\begin_layout Plain Layout
+
+		function(){emit(this.Book_Name,this.Pages);}
+\end_layout
+
+\begin_layout Plain Layout
+
+		,function(key,values){return Array.avg(values)}
+\end_layout
+
+\begin_layout Plain Layout
+
+		,{
+\end_layout
+
+\begin_layout Plain Layout
+
+			query:{Year:{ $gte: 1990 }}
+\end_layout
+
+\begin_layout Plain Layout
+
+			,out: "booksOut"
+\end_layout
+
+\begin_layout Plain Layout
+
+		})
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
