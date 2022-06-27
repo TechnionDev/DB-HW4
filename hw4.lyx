@@ -349,5 +349,244 @@ db.posts.mapReduce(
 
 \end_layout
 
+\begin_layout Section
+MongoDB
+\end_layout
+
+\begin_layout Subsection
+Translate table into MongoDb
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+    _id: ObjectId("5a0a1d9c4c9d4400009c9d44"),
+\end_layout
+
+\begin_layout Plain Layout
+
+    Book_Id: 1111,
+\end_layout
+
+\begin_layout Plain Layout
+
+    Book_Name: "Database Systems",
+\end_layout
+
+\begin_layout Plain Layout
+
+    Year: 1998,
+\end_layout
+
+\begin_layout Plain Layout
+
+    Max_Time: 7,
+\end_layout
+
+\begin_layout Plain Layout
+
+    Pages: 348,
+\end_layout
+
+\begin_layout Plain Layout
+
+    Faculty: "CS"
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Update 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+Max_Time
+\end_layout
+
+\end_inset
+
+ to two weeks
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+db.books.update(
+\end_layout
+
+\begin_layout Plain Layout
+
+    { Faculty: "CS" },
+\end_layout
+
+\begin_layout Plain Layout
+
+    { $set: { Max_Time: 7 } }
+\end_layout
+
+\begin_layout Plain Layout
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Query to calculate the number of books for each faculty
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+db.books.aggregate(
+\end_layout
+
+\begin_layout Plain Layout
+
+    [
+\end_layout
+
+\begin_layout Plain Layout
+
+        { $group: { _id: "$Faculty", count: { $sum: 1 } } }
+\end_layout
+
+\begin_layout Plain Layout
+
+    ]
+\end_layout
+
+\begin_layout Plain Layout
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Use MapReduce to get for each book name the average number of pages for
+ books newer than 1990
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+db.books.mapReduce(
+\end_layout
+
+\begin_layout Plain Layout
+
+	function () {
+\end_layout
+
+\begin_layout Plain Layout
+
+		emit(this.Book_Name, this.Pages);
+\end_layout
+
+\begin_layout Plain Layout
+
+	},
+\end_layout
+
+\begin_layout Plain Layout
+
+	function (key, pageCounts) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		return Array.sum(pageCounts) / pageCounts.length;
+\end_layout
+
+\begin_layout Plain Layout
+
+	},
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\end_layout
+
+\begin_layout Plain Layout
+
+		out: 
+\begin_inset Quotes eld
+\end_inset
+
+Books_Averages
+\begin_inset Quotes erd
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Plain Layout
+
+		query: { Year: {$gte: 1990} }
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+XML
+\end_layout
+
+\begin_layout Standard
+stuff goes here
+\end_layout
+
 \end_body
 \end_document
