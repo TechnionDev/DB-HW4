@@ -84,11 +84,12 @@ theorems-std
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
-\tracking_changes false
+\tracking_changes true
 \output_changes false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\author -755788726 "Gur Telem"
 \end_header
 
 \begin_body
@@ -827,7 +828,27 @@ status open
 
 \begin_layout Plain Layout
 
-MATCH (e:Employee) WHERE size( (e)-[:workIn]->() ) >= 2 RETURN e.id
+MATCH (e:Employee) WHERE size( (e)
+\change_inserted -755788726 1656520646
+ 
+\change_unchanged
+-[:workI
+\change_deleted -755788726 1656516953
+n
+\change_inserted -755788726 1656516953
+N
+\change_unchanged
+]->
+\change_inserted -755788726 1656520647
+ 
+\change_unchanged
+() ) >= 2 RETURN e.
+\change_deleted -755788726 1656516967
+i
+\change_inserted -755788726 1656516967
+I
+\change_unchanged
+d
 \end_layout
 
 \end_inset
@@ -861,7 +882,27 @@ MATCH (v:Vaccine)
 
 \begin_layout Plain Layout
 
-WHERE ALL(x in labs WHERE(v.name=~'Covid.*' AND (x)-[:Produce]->(v))
+WHERE ALL
+\change_inserted -755788726 1656520761
+ 
+\change_unchanged
+(x in labs WHERE(v.name
+\change_inserted -755788726 1656520762
+ 
+\change_unchanged
+=~
+\change_inserted -755788726 1656520763
+ 
+\change_unchanged
+'Covid.*' AND (x)
+\change_inserted -755788726 1656520766
+ 
+\change_unchanged
+-[:Produce]->
+\change_inserted -755788726 1656520768
+ 
+\change_unchanged
+(v))
 \end_layout
 
 \begin_layout Plain Layout
@@ -881,31 +922,68 @@ status open
 
 \begin_layout Plain Layout
 
+\change_inserted -755788726 1656520690
+
+MATCH (e: Employee) -[:WorkIN]-> (l: Lab) -[:Produce]-> (v: Vaccine)
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -755788726 1656520693
+
+WITH e, l, sum(v.Cost) AS profit
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -755788726 1656520742
+
+WHERE profit > 15000
+\end_layout
+
+\begin_layout Plain Layout
+
+\change_inserted -755788726 1656520695
+
+RETURN DISTINCT e.Name, e.City
+\change_deleted -755788726 1656520674
 MATCH (l:Lab)-[:Produce]->(v:Vaccine)
 \end_layout
 
 \begin_layout Plain Layout
+
+\change_deleted -755788726 1656520674
 
 WITH l, sum(v.Cost) AS Revenue 
 \end_layout
 
 \begin_layout Plain Layout
 
+\change_deleted -755788726 1656520674
+
 \end_layout
 
 \begin_layout Plain Layout
+
+\change_deleted -755788726 1656520674
 
 WHERE Revenue<15000 
 \end_layout
 
 \begin_layout Plain Layout
 
+\change_deleted -755788726 1656520674
+
 MATCH (e:Employee)-[:workIN]->(l) 
 \end_layout
 
 \begin_layout Plain Layout
 
+\change_deleted -755788726 1656520674
+
 RETURN e.Name, e.City
+\change_unchanged
+
 \end_layout
 
 \end_inset
@@ -925,7 +1003,29 @@ MATCH (l:Lab)
 
 \begin_layout Plain Layout
 
-WHERE size((l)<-[:workIn]-()) >= 2 
+WHERE size(
+\change_inserted -755788726 1656520873
+ 
+\change_unchanged
+(l)
+\change_inserted -755788726 1656520871
+ 
+\change_unchanged
+<-[:workI
+\change_deleted -755788726 1656516955
+n
+\change_inserted -755788726 1656516955
+N
+\change_unchanged
+]-
+\change_inserted -755788726 1656520869
+ 
+\change_unchanged
+()
+\change_inserted -755788726 1656520875
+ 
+\change_unchanged
+) >= 2 
 \end_layout
 
 \begin_layout Plain Layout
@@ -939,12 +1039,36 @@ WITH l
 
 \begin_layout Plain Layout
 
-MATCH (e:Employee)-[:workIN]->(l)-[:Produce]->(v:Vaccine) 
+MATCH (e:Employee)
+\change_inserted -755788726 1656520651
+ 
+\change_unchanged
+-[:workIN]->
+\change_inserted -755788726 1656520653
+ 
+\change_unchanged
+(l)
+\change_inserted -755788726 1656520655
+ 
+\change_unchanged
+-[:Produce]->
+\change_inserted -755788726 1656520657
+ 
+\change_unchanged
+(v:Vaccine) 
 \end_layout
 
 \begin_layout Plain Layout
 
-WHERE v.Productivity>0.9
+WHERE v.Productivity
+\change_inserted -755788726 1656520848
+ 
+\change_unchanged
+>
+\change_inserted -755788726 1656520848
+ 
+\change_unchanged
+0.9
 \end_layout
 
 \begin_layout Plain Layout
@@ -958,7 +1082,15 @@ WITH e,l, count(*) AS eff
 
 \begin_layout Plain Layout
 
-WHERE eff=1 
+WHERE eff
+\change_inserted -755788726 1656520862
+ 
+\change_unchanged
+=
+\change_inserted -755788726 1656520863
+ 
+\change_unchanged
+1 
 \end_layout
 
 \begin_layout Plain Layout
