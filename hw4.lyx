@@ -799,6 +799,9 @@ status open
 
 \begin_layout Standard
 The result would be
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
 inline false
 status open
@@ -806,6 +809,161 @@ status open
 \begin_layout Plain Layout
 
 Database Systems
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Neo4j
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+MATCH (e:Employee) WHERE size( (e)-[:workIn]->() ) >= 2 RETURN e.id
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+MATCH (l:Lab) 
+\end_layout
+
+\begin_layout Plain Layout
+
+WITH collect(l) as labs 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+MATCH (v:Vaccine) 
+\end_layout
+
+\begin_layout Plain Layout
+
+WHERE ALL(x in labs WHERE(v.name=~'Covid.*' AND (x)-[:Produce]->(v))
+\end_layout
+
+\begin_layout Plain Layout
+
+RETURN v.Name
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+MATCH (l:Lab)-[:Produce]->(v:Vaccine)
+\end_layout
+
+\begin_layout Plain Layout
+
+WITH l, sum(v.Cost) AS Revenue 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+WHERE Revenue<15000 
+\end_layout
+
+\begin_layout Plain Layout
+
+MATCH (e:Employee)-[:workIN]->(l) 
+\end_layout
+
+\begin_layout Plain Layout
+
+RETURN e.Name, e.City
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+MATCH (l:Lab) 
+\end_layout
+
+\begin_layout Plain Layout
+
+WHERE size((l)<-[:workIn]-()) >= 2 
+\end_layout
+
+\begin_layout Plain Layout
+
+WITH l
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+MATCH (e:Employee)-[:workIN]->(l)-[:Produce]->(v:Vaccine) 
+\end_layout
+
+\begin_layout Plain Layout
+
+WHERE v.Productivity>0.9
+\end_layout
+
+\begin_layout Plain Layout
+
+WITH e,l, count(*) AS eff 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+WHERE eff=1 
+\end_layout
+
+\begin_layout Plain Layout
+
+RETURN e.Name
 \end_layout
 
 \end_inset
