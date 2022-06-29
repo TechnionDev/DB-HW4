@@ -175,184 +175,6 @@ Gur Telem
 MongoDB
 \end_layout
 
-\begin_layout Enumerate
-\begin_inset listings
-inline true
-status open
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\begin_layout Plain Layout
-
-	_id:ObjectId(
-\begin_inset Quotes eld
-\end_inset
-
-1111
-\begin_inset Quotes erd
-\end_inset
-
-),
-\end_layout
-
-\begin_layout Plain Layout
-
-	Book_Name: 
-\begin_inset Quotes eld
-\end_inset
-
-DataBaseSystems
-\begin_inset Quotes erd
-\end_inset
-
-,
-\end_layout
-
-\begin_layout Plain Layout
-
-	Year: 1998,
-\end_layout
-
-\begin_layout Plain Layout
-
-	Max_time: 7,
-\end_layout
-
-\begin_layout Plain Layout
-
-	Pages: 348,
-\end_layout
-
-\begin_layout Plain Layout
-
-	Faculty: 
-\begin_inset Quotes eld
-\end_inset
-
-CS
-\begin_inset Quotes erd
-\end_inset
-
-	
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset listings
-inline true
-status open
-
-\begin_layout Plain Layout
-
-var func = function(book){ 	
-\end_layout
-
-\begin_layout Plain Layout
-
-	if (book.Faculty == "CS" && book.Max_time > 7){
-\end_layout
-
-\begin_layout Plain Layout
-
-		db.books.update({ _id: book._id },{ "$set": { "Max_time": 7 } });
-\end_layout
-
-\begin_layout Plain Layout
-
-	} 
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\begin_layout Plain Layout
-
-db.books.find().forEach(func)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset listings
-inline true
-status open
-
-\begin_layout Plain Layout
-
-db.posts.aggregate( {$group : {_id:"$Faculty", count:{$sum:1}}} )
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-db.posts.mapReduce(
-\end_layout
-
-\begin_layout Plain Layout
-
-		function(){emit(this.Book_Name,this.Pages);}
-\end_layout
-
-\begin_layout Plain Layout
-
-		,function(key,values){return Array.avg(values)}
-\end_layout
-
-\begin_layout Plain Layout
-
-		,{
-\end_layout
-
-\begin_layout Plain Layout
-
-			query:{Year:{ $gte: 1990 }}
-\end_layout
-
-\begin_layout Plain Layout
-
-			,out: "booksOut"
-\end_layout
-
-\begin_layout Plain Layout
-
-		})
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-MongoDB
-\end_layout
-
 \begin_layout Subsection
 Translate table into MongoDb
 \end_layout
@@ -429,13 +251,55 @@ Max_Time
 \end_layout
 
 \begin_layout Standard
+Note that 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+update
+\end_layout
+
+\end_inset
+
+ is deprecated.
+ If we were using an old version of MongoDB we would add a third parameter
+ to the 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+update
+\end_layout
+
+\end_inset
+
+ call: 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+{ multi: true }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
 inline false
 status open
 
 \begin_layout Plain Layout
 
-db.books.update(
+db.books.updateMany(
 \end_layout
 
 \begin_layout Plain Layout
@@ -534,7 +398,7 @@ db.books.mapReduce(
 
 \begin_layout Plain Layout
 
-		return Array.sum(pageCounts) / pageCounts.length;
+		return Array.avg(pageCounts);
 \end_layout
 
 \begin_layout Plain Layout
@@ -580,12 +444,373 @@ Books_Averages
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 XML
 \end_layout
 
+\begin_layout Subsection
+Translate into a graph
+\end_layout
+
 \begin_layout Standard
-stuff goes here
+\begin_inset Graphics
+	filename Q2S1TableToGraph.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Create an XML according to the graph from the previous section
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<books>
+\end_layout
+
+\begin_layout Plain Layout
+
+    <book name=
+\begin_inset Quotes erd
+\end_inset
+
+Database Systems
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+        <edition year=
+\begin_inset Quotes erd
+\end_inset
+
+1998
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+            <pages>348</pages>
+\end_layout
+
+\begin_layout Plain Layout
+
+            <faculty name=
+\begin_inset Quotes erd
+\end_inset
+
+CS
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+                <copy copy_id=
+\begin_inset Quotes erd
+\end_inset
+
+1111
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    <max_time>7</max_time>
+\end_layout
+
+\begin_layout Plain Layout
+
+                </copy>
+\end_layout
+
+\begin_layout Plain Layout
+
+                <copy copy_id=
+\begin_inset Quotes erd
+\end_inset
+
+1112
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    <max_time>14</max_time>
+\end_layout
+
+\begin_layout Plain Layout
+
+                </copy>
+\end_layout
+
+\begin_layout Plain Layout
+
+            </faculty>
+\end_layout
+
+\begin_layout Plain Layout
+
+        </edition>
+\end_layout
+
+\begin_layout Plain Layout
+
+        <edition year=
+\begin_inset Quotes erd
+\end_inset
+
+2001
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+            <pages>424</pages>
+\end_layout
+
+\begin_layout Plain Layout
+
+            <faculty name=
+\begin_inset Quotes erd
+\end_inset
+
+CS
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+                <copy copy_id=
+\begin_inset Quotes erd
+\end_inset
+
+1113
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    <max_time>7</max_time>
+\end_layout
+
+\begin_layout Plain Layout
+
+                </copy>
+\end_layout
+
+\begin_layout Plain Layout
+
+            </faculty>
+\end_layout
+
+\begin_layout Plain Layout
+
+        </edition>
+\end_layout
+
+\begin_layout Plain Layout
+
+    </book>
+\end_layout
+
+\begin_layout Plain Layout
+
+    <book name=
+\begin_inset Quotes erd
+\end_inset
+
+Database And Knowledge
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+        <edition year=
+\begin_inset Quotes erd
+\end_inset
+
+1998
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+            <pages>390</pages>
+\end_layout
+
+\begin_layout Plain Layout
+
+            <faculty name=
+\begin_inset Quotes erd
+\end_inset
+
+CS
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+                <copy copy_id=
+\begin_inset Quotes erd
+\end_inset
+
+2222
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    <max_time>1</max_time>
+\end_layout
+
+\begin_layout Plain Layout
+
+                </copy>
+\end_layout
+
+\begin_layout Plain Layout
+
+            </faculty>
+\end_layout
+
+\begin_layout Plain Layout
+
+            <faculty name=
+\begin_inset Quotes erd
+\end_inset
+
+EE
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+                <copy copy_id=
+\begin_inset Quotes erd
+\end_inset
+
+2223
+\begin_inset Quotes erd
+\end_inset
+
+>
+\end_layout
+
+\begin_layout Plain Layout
+
+                    <max_time>7</max_time>
+\end_layout
+
+\begin_layout Plain Layout
+
+                </copy>
+\end_layout
+
+\begin_layout Plain Layout
+
+            </faculty>
+\end_layout
+
+\begin_layout Plain Layout
+
+        </edition>
+\end_layout
+
+\begin_layout Plain Layout
+
+    </book>
+\end_layout
+
+\begin_layout Plain Layout
+
+</books>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+XPath query to return the names of the books with a faculty that golds more
+ than one copy
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+//faculty[count(copy) > 1]/../../@name
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The result would be
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Database Systems
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
